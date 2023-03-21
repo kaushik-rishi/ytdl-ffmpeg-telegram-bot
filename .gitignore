@@ -1,0 +1,5 @@
+.env
+venv/
+bucket/*.mp3
+trimmed_bucket/*.mp3
+__pycache__/
