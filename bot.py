@@ -1,3 +1,6 @@
+# ref later
+# https://github.com/python-telegram-bot/python-telegram-bot/issues/1264#issuecomment-431400273
+
 import telebot
 from uuid import uuid4
 from dotenv import load_dotenv
@@ -62,7 +65,8 @@ def audio(message):
         print("end: audio trim")
 
         doc = open(trimmed_file_path, 'rb')
-        bot.send_document(message.from_user.id, doc, timeout=100)
+        print(doc)
+        bot.send_document(message.from_user.id, doc, timeout=200)
 
         # Send a response
         bot.send_message(chat_id=message.chat.id,

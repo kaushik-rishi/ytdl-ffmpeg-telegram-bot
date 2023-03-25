@@ -8,7 +8,7 @@ def trim_audio(input_path, output_path, start=30, end=100):
         aud = (
             input_stream.audio
             .filter_('atrim', start=start, end=end)
-            .filter_('asetpts', 'PTS-STARTPTS')
+            # .filter_('asetpts', 'PTS-STARTPTS')
         )
 
         # joined = ffmpeg.concat(vid, aud, v=1, a=1).node
