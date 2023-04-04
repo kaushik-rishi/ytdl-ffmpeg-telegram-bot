@@ -5,8 +5,10 @@ import telebot
 from uuid import uuid4
 from dotenv import load_dotenv
 import os
+import re
 from downloaders import download_audio
 from media_editing import trim_audio
+import requests
 
 load_dotenv()
 
@@ -73,6 +75,42 @@ def audio(message):
                          text="Finished proccessing")
 
         print("finished!!")
+
+    except Exception as e:
+        # Send an error message if there was an error parsing the message
+        bot.send_message(chat_id=message.chat.id, text="Error: " + str(e))
+
+
+@bot.message_handler(commands=['reel'])
+def reel(message):
+    try:
+        # Split the message into its components
+        message_parts = message.text.split()
+        reel_url = message_parts[1]
+        shortcode = re.search(r'/reel/(\w+)/?', reel_url).group(1)
+
+        headers = {
+            'X-RapidAPI-Host': 'instagram-bulk-profile-scrapper.p.rapidapi.com',
+            'X-RapidAPI-Key': '566a1a3b45mshf8dae33e2558c9dp1fcc0bjsn474b63726369',
+        }
+
+        params = {
+            'shortcode': shortcode,
+            'response_type': 'reels',
+        }
+
+        response = requests.get(
+            'https://instagram-bulk-profile-scrapper.p.rapidapi.com/clients/api/ig/media_by_id',
+            params=params,
+            headers=headers,
+        )
+        data = response.json()
+        reel_media_url = data[0]['items'][0]['video_versions'][0]['url']
+        print(reel_media_url)
+
+        # Send a response
+        bot.send_message(chat_id=message.chat.id,
+                         text=reel_media_url)
 
     except Exception as e:
         # Send an error message if there was an error parsing the message
