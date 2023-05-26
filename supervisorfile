@@ -1,0 +1,12 @@
+[program:ytdlffmpegbot]
+command=/home/rishi/ytdl-ffmpeg-telegram-bot/venv/bin/python3 /home/rishi/ytdl-ffmpeg-telegram-bot/bot.py
+directory=/home/rishi/ytdl-ffmpeg-telegram-bot
+autostart=true
+autorestart=unexpected
+startsecs=5
+startretries=2
+stopsignal=INT
+stopwaitsecs=60
+redirect_stderr=true
+stdout_logfile=/home/rishi/ytdlffmpegbot.log
+stdout_logfile_maxbytes=10MB
